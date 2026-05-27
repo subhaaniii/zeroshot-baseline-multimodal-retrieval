@@ -212,7 +212,7 @@ The intended use of this repo is:
 establish the retrieval floor
 measure non-trained baseline strength
 identify when learned alignment is actually needed
-
+```
 
 ## Documentation
 
