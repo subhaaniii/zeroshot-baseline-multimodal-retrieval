@@ -1,0 +1,1 @@
+# zeroshot-baseline-multimodal-retrieval
