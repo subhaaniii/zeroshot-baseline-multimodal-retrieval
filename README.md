@@ -212,3 +212,10 @@ The intended use of this repo is:
 establish the retrieval floor
 measure non-trained baseline strength
 identify when learned alignment is actually needed
+
+
+## Documentation
+
+- [Baseline validation notes](docs/baseline_validation_notes.md)
+- [Zero-shot metric guide](docs/zero_shot_metric_guide.md)
+- [Benchmark protocol](docs/benchmark_protocol.md)
