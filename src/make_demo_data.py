@@ -134,20 +134,84 @@ def generate_data(args: argparse.Namespace) -> tuple[pd.DataFrame, pd.DataFrame,
         "M",
         "F",
     )
+        # Modality-specific metadata observations.
+    # A and B share the same latent source, but metadata is not copied exactly.
+    age_a = np.clip(
+        age + rng.normal(0, 1.5 + 8 * settings["metadata_noise"], args.n_samples),
+        18,
+        90,
+    )
+    age_b = np.clip(
+        age + rng.normal(0, 1.5 + 8 * settings["metadata_noise"], args.n_samples),
+        18,
+        90,
+    )
 
-    def make_df(prefix: str, features: np.ndarray) -> pd.DataFrame:
+    severity_a = np.clip(
+        severity + rng.normal(0, settings["metadata_noise"], args.n_samples),
+        0,
+        1,
+    )
+    severity_b = np.clip(
+        severity + rng.normal(0, settings["metadata_noise"], args.n_samples),
+        0,
+        1,
+    )
+
+    condition_a_mod1 = (
+        latent[:, 2] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0
+    ).astype(int)
+    condition_a_mod2 = (
+        latent[:, 2] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0
+    ).astype(int)
+
+    condition_b_mod1 = (
+        latent[:, 3] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0
+    ).astype(int)
+    condition_b_mod2 = (
+        latent[:, 3] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0
+    ).astype(int)
+
+    condition_c_mod1 = (
+        latent[:, 4] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0
+    ).astype(int)
+    condition_c_mod2 = (
+        latent[:, 4] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0
+    ).astype(int)
+
+    sex_a = np.where(
+        latent[:, 5] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0,
+        "M",
+        "F",
+    )
+    sex_b = np.where(
+        latent[:, 5] + rng.normal(0, settings["metadata_noise"] * 1.5, args.n_samples) > 0,
+        "M",
+        "F",
+    )
+
+    def make_df(
+        prefix: str,
+        features: np.ndarray,
+        age_values: np.ndarray,
+        severity_values: np.ndarray,
+        condition_a_values: np.ndarray,
+        condition_b_values: np.ndarray,
+        condition_c_values: np.ndarray,
+        sex_values: np.ndarray,
+    ) -> pd.DataFrame:
         rows = []
         for i in range(args.n_samples):
             row = {
                 f"{prefix}_id": int(sample_ids[i]),
                 "true_pair_id": int(sample_ids[i]),
                 "group_id": int(group_ids[i]),
-                "age": float(age[i]),
-                "severity": float(severity[i]),
-                "condition_a": int(condition_a[i]),
-                "condition_b": int(condition_b[i]),
-                "condition_c": int(condition_c[i]),
-                "sex": str(sex[i]),
+                "age": float(age_values[i]),
+                "severity": float(severity_values[i]),
+                "condition_a": int(condition_a_values[i]),
+                "condition_b": int(condition_b_values[i]),
+                "condition_c": int(condition_c_values[i]),
+                "sex": str(sex_values[i]),
             }
 
             for j in range(args.feature_dim):
@@ -160,8 +224,29 @@ def generate_data(args: argparse.Namespace) -> tuple[pd.DataFrame, pd.DataFrame,
 
         return pd.DataFrame(rows)
 
-    a_df = make_df("a", a_features)
-    b_df = make_df("b", b_features)
+    a_df = make_df(
+        "a",
+        a_features,
+        age_a,
+        severity_a,
+        condition_a_mod1,
+        condition_b_mod1,
+        condition_c_mod1,
+        sex_a,
+    )
+
+    b_df = make_df(
+        "b",
+        b_features,
+        age_b,
+        severity_b,
+        condition_a_mod2,
+        condition_b_mod2,
+        condition_c_mod2,
+        sex_b,
+    )
+
+    
 
     true_pairs = pd.DataFrame(
         {
