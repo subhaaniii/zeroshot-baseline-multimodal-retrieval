@@ -1,0 +1,16 @@
+{
+  "mode": "noisy",
+  "n_samples": 6000,
+  "n_groups": 60,
+  "latent_dim": 32,
+  "feature_dim": 64,
+  "seed": 42,
+  "settings": {
+    "latent_noise": 0.35,
+    "feature_noise_a": 0.25,
+    "feature_noise_b": 0.3,
+    "metadata_noise": 0.3,
+    "cross_modal_shift": 0.6
+  },
+  "description": "Synthetic paired multimodal data for zero-shot retrieval baseline evaluation."
+}
