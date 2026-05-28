@@ -167,9 +167,23 @@ The PCA plots below show how the two generated modality feature spaces behave un
 
 Each point is one sample after projecting the generated feature vectors into 2D with PCA.
 
-- **Circles** represent **modality A**
-- **Crosses** represent **modality B**
-- **Colors** indicate the underlying synthetic group identity
+- **Circles** represent **modality A**, the query-side feature space.
+- **Crosses** represent **modality B**, the candidate-side feature space.
+- **Colors** indicate the underlying synthetic group identity.
+
+| Visual pattern | Interpretation |
+|---|---|
+| Same-colored circles and crosses overlap | The two modalities preserve similar group structure, so zero-shot retrieval is easier. |
+| Same-colored circles and crosses are shifted apart | The cross-modal alignment problem is harder because matching samples occupy different regions. |
+| Points become scattered or mixed by noise | Shared structure is less reliable, which helps explain weaker retrieval performance. |
+
+| Panel | Main takeaway |
+|---|---|
+| **Aligned** | Modality A and B are more compatible, so raw feature and PCA baselines can perform strongly. |
+| **Shifted** | The modalities are displaced, making raw similarity harder and making PCA projection more useful. |
+| **Noisy** | Group structure is less clean, matching the drop in retrieval performance across practical baselines. |
+
+These figures are qualitative diagnostics. The main conclusions come from the quantitative retrieval results in `experiments/results_table.csv`.
 
 ### How to read these plots
 
