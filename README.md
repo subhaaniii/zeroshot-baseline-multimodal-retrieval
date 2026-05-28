@@ -157,23 +157,23 @@ The full interpretation is here:
 
 ---
 
-## Feature-Space Visualization
+## Feature-Space Visualizations
 
-The PCA plot below shows the two generated modality feature spaces.
+The PCA plots below show how the two generated modality feature spaces behave under aligned, shifted, and noisy benchmark conditions.
 
-![Zero-shot baseline feature space](figures/baseline_feature_space_pca2d.png)
-
-This example visualization uses the currently generated demo dataset. In this run, the demo condition is `noisy`.
+| Aligned | Shifted | Noisy |
+|---|---|---|
+| ![Aligned feature space](figures/aligned_feature_space_pca2d.png) | ![Shifted feature space](figures/shifted_feature_space_pca2d.png) | ![Noisy feature space](figures/noisy_feature_space_pca2d.png) |
 
 Each dot is one sample. Circles represent modality A and crosses represent modality B. Colors indicate synthetic group labels.
 
-| Visual cue | Meaning |
+| Panel | What to notice |
 |---|---|
-| Circles and crosses overlap well | The two modalities are geometrically compatible, so simple baselines may work well |
-| Circles and crosses are displaced | The modalities are shifted, so raw similarity becomes harder |
-| Colors are scattered or mixed heavily | Group structure is weaker, usually matching lower retrieval performance |
+| **Aligned** | The two modality spaces are more compatible, so raw feature and PCA baselines can perform strongly. |
+| **Shifted** | The modality spaces are displaced, making raw similarity harder and showing why PCA projection becomes useful. |
+| **Noisy** | The structure becomes less reliable, matching the drop in retrieval performance across practical baselines. |
 
-This plot is a qualitative diagnostic. It helps show how the two modality feature spaces overlap or separate before applying retrieval baselines. The main conclusions are based on the full benchmark table in `experiments/results_table.csv`.
+These plots are qualitative diagnostics. The main conclusions are based on the quantitative benchmark results in `experiments/results_table.csv`.
 
 ---
 
