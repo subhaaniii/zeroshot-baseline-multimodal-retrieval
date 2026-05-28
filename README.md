@@ -157,6 +157,26 @@ The full interpretation is here:
 
 ---
 
+## Feature-Space Visualization
+
+The PCA plot below shows the two generated modality feature spaces.
+
+![Zero-shot baseline feature space](figures/baseline_feature_space_pca2d.png)
+
+This example visualization uses the currently generated demo dataset. In this run, the demo condition is `noisy`.
+
+Each dot is one sample. Circles represent modality A and crosses represent modality B. Colors indicate synthetic group labels.
+
+| Visual cue | Meaning |
+|---|---|
+| Circles and crosses overlap well | The two modalities are geometrically compatible, so simple baselines may work well |
+| Circles and crosses are displaced | The modalities are shifted, so raw similarity becomes harder |
+| Colors are scattered or mixed heavily | Group structure is weaker, usually matching lower retrieval performance |
+
+This plot is a qualitative diagnostic. It helps show how the two modality feature spaces overlap or separate before applying retrieval baselines. The main conclusions are based on the full benchmark table in `experiments/results_table.csv`.
+
+---
+
 ## Main Lesson
 
 The benchmark shows a simple pattern:
