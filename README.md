@@ -165,15 +165,27 @@ The PCA plots below show how the two generated modality feature spaces behave un
 |---|---|---|
 | ![Aligned feature space](figures/aligned_feature_space_pca2d.png) | ![Shifted feature space](figures/shifted_feature_space_pca2d.png) | ![Noisy feature space](figures/noisy_feature_space_pca2d.png) |
 
-Each dot is one sample. Circles represent modality A and crosses represent modality B. Colors indicate synthetic group labels.
+Each point is one sample after projecting the generated feature vectors into 2D with PCA.
 
-| Panel | What to notice |
-|---|---|
-| **Aligned** | The two modality spaces are more compatible, so raw feature and PCA baselines can perform strongly. |
-| **Shifted** | The modality spaces are displaced, making raw similarity harder and showing why PCA projection becomes useful. |
-| **Noisy** | The structure becomes less reliable, matching the drop in retrieval performance across practical baselines. |
+- **Circles** represent **modality A**
+- **Crosses** represent **modality B**
+- **Colors** indicate the underlying synthetic group identity
 
-These plots are qualitative diagnostics. The main conclusions are based on the quantitative benchmark results in `experiments/results_table.csv`.
+### How to read these plots
+
+If circles and crosses with the **same color** appear close to each other or overlap, it suggests that the two modalities preserve similar group structure. This usually makes zero-shot retrieval easier.
+
+If same-colored circles and crosses are visibly **shifted apart**, the cross-modal alignment problem becomes harder, because corresponding samples occupy different regions of feature space.
+
+If the plot becomes more **scattered or mixed by noise**, the shared structure becomes less reliable, which helps explain weaker retrieval performance.
+
+### Condition-level interpretation
+
+- **Aligned:** same-colored circles and crosses overlap more often, indicating that the two modalities are already compatible.
+- **Shifted:** same-colored groups are still present, but circles and crosses are displaced, showing a domain gap between modalities.
+- **Noisy:** group structure becomes less clean, and overlap between corresponding modality samples is reduced, which matches weaker retrieval performance.
+
+These figures are qualitative diagnostics. The main conclusions of the benchmark come from the quantitative retrieval results in `experiments/results_table.csv`.
 
 ---
 
