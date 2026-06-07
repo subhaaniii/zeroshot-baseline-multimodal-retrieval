@@ -106,36 +106,6 @@ Results:
 experiments/results_table.csv
 experiments/results_summary.md
 ```
-
----
-
-## Quick Run
-
-Install dependencies:
-
-```powershell
-pip install -r requirements.txt
-```
-
-Generate one dataset:
-
-```powershell
-python src/make_demo_data.py --mode shifted --n-samples 6000 --n-groups 60
-```
-
-Evaluate one baseline:
-
-```powershell
-python src/evaluate_baselines.py --baseline pca_projected
-```
-
-Run everything:
-
-```powershell
-python src/run_benchmark.py
-python src/collect_results.py
-```
-
 ---
 
 ## Reading the Output
@@ -218,7 +188,34 @@ So the practical rule is:
 ```text
 Do not celebrate a trained retrieval model until it beats strong no-training baselines.
 ```
+---
 
+## Quick Run
+
+Install dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+Generate one dataset:
+
+```powershell
+python src/make_demo_data.py --mode shifted --n-samples 6000 --n-groups 60
+```
+
+Evaluate one baseline:
+
+```powershell
+python src/evaluate_baselines.py --baseline pca_projected
+```
+
+Run everything:
+
+```powershell
+python src/run_benchmark.py
+python src/collect_results.py
+```
 ---
 
 ## Research Context
