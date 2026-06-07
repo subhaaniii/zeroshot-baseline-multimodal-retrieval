@@ -44,6 +44,52 @@ The oracle latent baseline is not a real deployment method. It exists only to sh
 
 ---
 
+## Feature-Space Visualizations
+
+The PCA plots below show how the two generated modality feature spaces behave under aligned, shifted, and noisy benchmark conditions.
+
+| Aligned | Shifted | Noisy |
+|---|---|---|
+| ![Aligned feature space](figures/aligned_feature_space_pca2d.png) | ![Shifted feature space](figures/shifted_feature_space_pca2d.png) | ![Noisy feature space](figures/noisy_feature_space_pca2d.png) |
+
+Each point is one sample after projecting the generated feature vectors into 2D with PCA.
+
+- **Circles** represent **modality A**, the query-side feature space.
+- **Crosses** represent **modality B**, the candidate-side feature space.
+- **Colors** indicate the underlying synthetic group identity.
+
+| Visual pattern | Interpretation |
+|---|---|
+| Same-colored circles and crosses overlap | The two modalities preserve similar group structure, so zero-shot retrieval is easier. |
+| Same-colored circles and crosses are shifted apart | The cross-modal alignment problem is harder because matching samples occupy different regions. |
+| Points become scattered or mixed by noise | Shared structure is less reliable, which helps explain weaker retrieval performance. |
+
+| Panel | Main takeaway |
+|---|---|
+| **Aligned** | Modality A and B are more compatible, so raw feature and PCA baselines can perform strongly. |
+| **Shifted** | The modalities are displaced, making raw similarity harder and making PCA projection more useful. |
+| **Noisy** | Group structure is less clean, matching the drop in retrieval performance across practical baselines. |
+
+These figures are qualitative diagnostics. The main conclusions come from the quantitative retrieval results in `experiments/results_table.csv`.
+
+### How to read these plots
+
+If circles and crosses with the **same color** appear close to each other or overlap, it suggests that the two modalities preserve similar group structure. This usually makes zero-shot retrieval easier.
+
+If same-colored circles and crosses are visibly **shifted apart**, the cross-modal alignment problem becomes harder, because corresponding samples occupy different regions of feature space.
+
+If the plot becomes more **scattered or mixed by noise**, the shared structure becomes less reliable, which helps explain weaker retrieval performance.
+
+### Condition-level interpretation
+
+- **Aligned:** same-colored circles and crosses overlap more often, indicating that the two modalities are already compatible.
+- **Shifted:** same-colored groups are still present, but circles and crosses are displaced, showing a domain gap between modalities.
+- **Noisy:** group structure becomes less clean, and overlap between corresponding modality samples is reduced, which matches weaker retrieval performance.
+
+These figures are qualitative diagnostics. The main conclusions of the benchmark come from the quantitative retrieval results in `experiments/results_table.csv`.
+
+---
+
 ## Dataset Stress Tests
 
 The benchmark uses three controlled retrieval conditions:
@@ -124,52 +170,6 @@ The full interpretation is here:
 
 - [Result summary](experiments/results_summary.md)
 - [Raw result table](experiments/results_table.csv)
-
----
-
-## Feature-Space Visualizations
-
-The PCA plots below show how the two generated modality feature spaces behave under aligned, shifted, and noisy benchmark conditions.
-
-| Aligned | Shifted | Noisy |
-|---|---|---|
-| ![Aligned feature space](figures/aligned_feature_space_pca2d.png) | ![Shifted feature space](figures/shifted_feature_space_pca2d.png) | ![Noisy feature space](figures/noisy_feature_space_pca2d.png) |
-
-Each point is one sample after projecting the generated feature vectors into 2D with PCA.
-
-- **Circles** represent **modality A**, the query-side feature space.
-- **Crosses** represent **modality B**, the candidate-side feature space.
-- **Colors** indicate the underlying synthetic group identity.
-
-| Visual pattern | Interpretation |
-|---|---|
-| Same-colored circles and crosses overlap | The two modalities preserve similar group structure, so zero-shot retrieval is easier. |
-| Same-colored circles and crosses are shifted apart | The cross-modal alignment problem is harder because matching samples occupy different regions. |
-| Points become scattered or mixed by noise | Shared structure is less reliable, which helps explain weaker retrieval performance. |
-
-| Panel | Main takeaway |
-|---|---|
-| **Aligned** | Modality A and B are more compatible, so raw feature and PCA baselines can perform strongly. |
-| **Shifted** | The modalities are displaced, making raw similarity harder and making PCA projection more useful. |
-| **Noisy** | Group structure is less clean, matching the drop in retrieval performance across practical baselines. |
-
-These figures are qualitative diagnostics. The main conclusions come from the quantitative retrieval results in `experiments/results_table.csv`.
-
-### How to read these plots
-
-If circles and crosses with the **same color** appear close to each other or overlap, it suggests that the two modalities preserve similar group structure. This usually makes zero-shot retrieval easier.
-
-If same-colored circles and crosses are visibly **shifted apart**, the cross-modal alignment problem becomes harder, because corresponding samples occupy different regions of feature space.
-
-If the plot becomes more **scattered or mixed by noise**, the shared structure becomes less reliable, which helps explain weaker retrieval performance.
-
-### Condition-level interpretation
-
-- **Aligned:** same-colored circles and crosses overlap more often, indicating that the two modalities are already compatible.
-- **Shifted:** same-colored groups are still present, but circles and crosses are displaced, showing a domain gap between modalities.
-- **Noisy:** group structure becomes less clean, and overlap between corresponding modality samples is reduced, which matches weaker retrieval performance.
-
-These figures are qualitative diagnostics. The main conclusions of the benchmark come from the quantitative retrieval results in `experiments/results_table.csv`.
 
 ---
 
